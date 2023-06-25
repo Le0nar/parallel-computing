@@ -16,7 +16,7 @@ console.time('time')
 const coresLength = cpus().length
 
 let startIndex = 0;
-const step = Math.floor(arr.length / coresLength)
+const step = Math.ceil(arr.length / coresLength)
 let endIndex = step
 
 const emptyList = new Array(coresLength).fill(null)
