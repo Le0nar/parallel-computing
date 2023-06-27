@@ -2,7 +2,7 @@ const { Worker } = require('worker_threads')
 const { cpus } = require('os')
 const R = require('./constants');
 
-const runThread = (workerData) => {
+const startComputing = (workerData) => {
     return new Promise((resolve) => {
         const worker = new Worker('./thread.js', { workerData });
         worker.on('message', resolve);
@@ -22,12 +22,12 @@ let endIndex = step
 const emptyList = new Array(coresLength).fill(null)
 
 const promiseList = emptyList.map((_item, index) => {
-    const result = runThread(arr.slice(startIndex, endIndex))
+    const result = startComputing(arr.slice(startIndex, endIndex))
     startIndex = endIndex
     endIndex = endIndex + step
 
     if (index === emptyList.length - 1) {
-        return runThread(arr.slice(startIndex))
+        return startComputing(arr.slice(startIndex))
     }
 
     return result;
